@@ -38,7 +38,6 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "tsc --noEmit -p tsconfig.json",
       "npm run lint",
       "npm run format"
     ],
