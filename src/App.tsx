@@ -11,7 +11,7 @@ export type TaskType = {
 function App() {
   const [tasks, setTasks] = useLocalStorage<TaskType[] | null>(
     "app:tasks",
-    null
+    null,
   );
   const [phrase, setPhrase] = useState<string>("");
 
@@ -52,7 +52,7 @@ function App() {
       {tasks && (
         <Lists
           tasks={tasks.filter((task) =>
-            task.content.toLowerCase().includes(phrase.toLowerCase())
+            task.content.toLowerCase().includes(phrase.toLowerCase()),
           )}
         />
       )}
