@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { Lists } from "./components/lists/Lists";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 
@@ -35,6 +35,10 @@ function App() {
     setPhrase("");
   };
 
+  const filteredByPhrase = tasks?.filter((task) =>
+    task.content.toLocaleLowerCase().includes(phrase.toLocaleLowerCase()),
+  );
+
   return (
     <div className="container px-4 mx-auto">
       <form onSubmit={(e) => handleSubmitForm(e)} className="flex">
@@ -49,11 +53,11 @@ function App() {
           className="bg-zinc-800 text-white cursor-pointer"
         />
       </form>
-      {tasks && (
+      {tasks && filteredByPhrase && (
         <Lists
-          tasks={tasks.filter((task) =>
-            task.content.toLowerCase().includes(phrase.toLowerCase()),
-          )}
+          tasks={tasks}
+          filteredByPhrase={filteredByPhrase}
+          setTasks={setTasks}
         />
       )}
     </div>

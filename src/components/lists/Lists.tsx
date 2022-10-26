@@ -1,75 +1,74 @@
 import React from "react";
 import { TaskType } from "../../App";
-import cn from "classnames";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 type ListsProps = {
   tasks: TaskType[];
+  setTasks: (
+    value: TaskType[] | ((val: TaskType[] | null) => TaskType[] | null) | null,
+  ) => void;
+  filteredByPhrase: TaskType[];
 };
 
-export const Lists = ({ tasks }: ListsProps) => {
-  const done = tasks.filter((task) => task.done === true);
-  const notDone = tasks.filter((task) => task.done === false);
+export const Lists = ({ tasks, setTasks, filteredByPhrase }: ListsProps) => {
+  const done = filteredByPhrase.filter((task) => task.done === true);
+  const toDo = filteredByPhrase.filter((task) => task.done === false);
+
+  const handleChangeTaskStatus = (task: TaskType) => {
+    console.log(tasks);
+    const updatedTask = {
+      ...task,
+      done: !task.done,
+    };
+
+    const withoutUpdatedTask = tasks.filter(
+      (v) => v.createdAt !== task.createdAt,
+    );
+
+    setTasks([updatedTask, ...withoutUpdatedTask]);
+  };
+
+  const handleDeleteTask = (task: TaskType) => {
+    setTasks(tasks.filter((v) => v.createdAt !== task.createdAt));
+  };
 
   return (
     <>
-      {notDone && notDone.length > 0 && (
-        <div>
-          <h3>Do zrobienia:</h3>
-          <List tasks={notDone} />
-        </div>
+      {toDo && toDo.length > 0 && (
+        <>
+          <h3>do zrobienia:</h3>
+          <ul>
+            {toDo.map((task) => (
+              <li key={task.createdAt}>
+                {task.content}
+                <input
+                  type="checkbox"
+                  checked={task.done}
+                  onChange={() => handleChangeTaskStatus(task)}
+                />
+                <button onClick={() => handleDeleteTask(task)}>delete</button>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
       {done && done.length > 0 && (
-        <div>
-          <h3>Zrobione:</h3>
-          <List tasks={done} />
-        </div>
+        <>
+          <h3>zrobione:</h3>
+          <ul>
+            {done.map((task) => (
+              <li key={task.createdAt}>
+                {task.content}
+                <input
+                  type="checkbox"
+                  checked={task.done}
+                  onChange={() => handleChangeTaskStatus(task)}
+                />
+                <button onClick={() => handleDeleteTask(task)}>delete</button>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </>
-  );
-};
-
-type ListProps = {
-  tasks: TaskType[];
-};
-
-const List = ({ tasks }: ListProps) => {
-  // get tasks from context
-  const handleChangeTaskStaus = ({ content, done, createdAt }: TaskType) => {
-    console.log("klik");
-  };
-  //   if (!storedTasks) return;
-
-  //   const updatedTask: TaskType = {
-  //     content: content,
-  //     done: !done,
-  //     createdAt: createdAt,
-  //   };
-
-  //   const updatedTasks = storedTasks?.filter(
-  //     (task) => task.createdAt !== createdAt
-  //   );
-
-  //   setStoredTasks([updatedTask, ...updatedTasks]);
-  // };
-
-  return (
-    <ul className="flex flex-col ">
-      {tasks.map((task) => (
-        <li key={task.createdAt} className="flex justify-between gap-2">
-          <p className={cn({ "line-through": task.done })}>{task.content}</p>
-          <label>
-            <span className="sr-only">
-              oznacz jako {task.done ? "do zrobienia" : "zrobione"}
-            </span>
-            <input
-              type="checkbox"
-              onChange={() => handleChangeTaskStaus(task)}
-              checked={task.done}
-            />
-          </label>
-        </li>
-      ))}
-    </ul>
   );
 };
