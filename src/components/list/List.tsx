@@ -14,17 +14,15 @@ export const List = ({
   handleChangeTaskStatus,
 }: ListProps) => {
   return (
-    <div className="flex flex-col bg-blue-100 px-4 py-1">
-      <ul className="flex flex-col">
-        {tasks.map((task) => (
-          <Task
-            key={task.createdAt}
-            task={task}
-            handleDeleteTask={handleDeleteTask}
-            handleChangeTaskStatus={handleChangeTaskStatus}
-          />
-        ))}
-      </ul>
-    </div>
+    <ul className="flex flex-col bg-blue-100 px-4 py-1">
+      {tasks.map((task) => (
+        <Task
+          key={task.createdAt}
+          task={task}
+          handleDeleteTask={handleDeleteTask}
+          handleChangeTaskStatus={handleChangeTaskStatus}
+        />
+      ))}
+    </ul>
   );
 };
