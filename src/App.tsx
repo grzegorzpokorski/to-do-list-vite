@@ -53,7 +53,7 @@ function App() {
               <button
                 type="reset"
                 value=""
-                className="px-4 bg-blue-500 hover:bg-blue-600 active:bg-blue-600 text-white cursor-pointer border-white border-x-2 transition-colors"
+                className="px-3 bg-blue-500 hover:bg-blue-600 active:bg-blue-600 text-white cursor-pointer border-white border-l-2 transition-colors"
                 onClick={() => setPhrase("")}
               >
                 <span className="sr-only">wyczyść pole</span>
@@ -62,7 +62,7 @@ function App() {
             )}
             <input
               type="submit"
-              className="bg-blue-500 hover:bg-blue-600 active:bg-blue-600 text-white cursor-pointer px-4 py-2 transition-colors"
+              className="bg-blue-500 hover:bg-blue-600 active:bg-blue-600 text-white cursor-pointer px-4 py-2 border-white border-l-2 transition-colors"
               value="Dodaj zadanie"
             />
           </div>
