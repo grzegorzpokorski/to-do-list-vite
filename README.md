@@ -7,6 +7,7 @@ Simple "to do list" app which helps keep your tasks organized in one place and m
 Better understanding how custom hooks work in react. Practicing create a context with typescript, better understanding how to deal with drill props in react components.
 
 ## 🛠️ Used tools and technologies:
+
 - react
 - tailwind CSS
 - vite
