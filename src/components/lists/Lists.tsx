@@ -1,16 +1,15 @@
 import React from "react";
 import { TaskType } from "../../App";
+import { useTasksContext } from "../../context/TasksContext";
 import { List } from "../list/List";
 
 type ListsProps = {
-  tasks: TaskType[];
-  setTasks: (
-    value: TaskType[] | ((val: TaskType[] | null) => TaskType[] | null) | null,
-  ) => void;
   filteredByPhrase: TaskType[];
 };
 
-export const Lists = ({ tasks, setTasks, filteredByPhrase }: ListsProps) => {
+export const Lists = ({ filteredByPhrase }: ListsProps) => {
+  const { tasks, setTasks } = useTasksContext();
+
   const done = filteredByPhrase.filter((task) => task.done === true);
   const toDo = filteredByPhrase.filter((task) => task.done === false);
 

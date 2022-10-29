@@ -2,6 +2,7 @@ import React, { FormEvent, useState } from "react";
 import { Lists } from "./components/lists/Lists";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { MdClear } from "react-icons/md";
+import { TasksContext } from "./context/TasksContext";
 
 export type TaskType = {
   content: string;
@@ -10,10 +11,7 @@ export type TaskType = {
 };
 
 function App() {
-  const [tasks, setTasks] = useLocalStorage<TaskType[] | null>(
-    "app:tasks",
-    null,
-  );
+  const [tasks, setTasks] = useLocalStorage<TaskType[]>("app:tasks", []);
   const [phrase, setPhrase] = useState<string>("");
 
   const handleSubmitForm = (e: FormEvent<HTMLFormElement>) => {
@@ -41,41 +39,39 @@ function App() {
   );
 
   return (
-    <div className="container px-4 mx-auto flex flex-col w-full lg:w-1/2">
-      <form onSubmit={(e) => handleSubmitForm(e)} className="">
-        <div className="flex justify-between mt-4">
-          <input
-            type="text"
-            onChange={(e) => setPhrase(e.target.value)}
-            className="border-2 border-zinc-500 w-full px-2 active:outline-blue-500 focus:outline-blue-500 transition-colors"
-            value={phrase}
-          />
-          {phrase && (
-            <button
-              type="reset"
-              value=""
-              className="px-4 bg-blue-500 hover:bg-blue-600 active:bg-blue-600 text-white cursor-pointer border-white border-x-2 transition-colors"
-              onClick={() => setPhrase("")}
-            >
-              <span className="sr-only">wyczyść pole</span>
-              <MdClear />
-            </button>
-          )}
-          <input
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-600 active:bg-blue-600 text-white cursor-pointer px-4 py-2 transition-colors"
-            value="Dodaj zadanie"
-          />
-        </div>
-      </form>
-      {tasks && filteredByPhrase && (
-        <Lists
-          tasks={tasks}
-          filteredByPhrase={filteredByPhrase}
-          setTasks={setTasks}
-        />
-      )}
-    </div>
+    <TasksContext.Provider value={{ tasks, setTasks }}>
+      <div className="container px-4 mx-auto flex flex-col w-full lg:w-1/2">
+        <form onSubmit={(e) => handleSubmitForm(e)} className="">
+          <div className="flex justify-between mt-4">
+            <input
+              type="text"
+              onChange={(e) => setPhrase(e.target.value)}
+              className="border-2 border-zinc-500 w-full px-2 active:outline-blue-500 focus:outline-blue-500 transition-colors"
+              value={phrase}
+            />
+            {phrase && (
+              <button
+                type="reset"
+                value=""
+                className="px-4 bg-blue-500 hover:bg-blue-600 active:bg-blue-600 text-white cursor-pointer border-white border-x-2 transition-colors"
+                onClick={() => setPhrase("")}
+              >
+                <span className="sr-only">wyczyść pole</span>
+                <MdClear />
+              </button>
+            )}
+            <input
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-600 active:bg-blue-600 text-white cursor-pointer px-4 py-2 transition-colors"
+              value="Dodaj zadanie"
+            />
+          </div>
+        </form>
+        {tasks && filteredByPhrase && (
+          <Lists filteredByPhrase={filteredByPhrase} />
+        )}
+      </div>
+    </TasksContext.Provider>
   );
 }
 
