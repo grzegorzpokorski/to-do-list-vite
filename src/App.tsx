@@ -41,7 +41,7 @@ function App() {
   );
 
   return (
-    <div className="container px-4 mx-auto flex flex-col">
+    <div className="container px-4 mx-auto flex flex-col w-full lg:w-1/2">
       <form onSubmit={(e) => handleSubmitForm(e)} className="">
         <div className="flex justify-between mt-4">
           <input
