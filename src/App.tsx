@@ -40,9 +40,10 @@ function App() {
 
   return (
     <TasksContext.Provider value={{ tasks, setTasks }}>
-      <div className="container px-4 mx-auto flex flex-col w-full lg:w-1/2">
-        <form onSubmit={(e) => handleSubmitForm(e)} className="">
-          <div className="flex justify-between mt-4">
+      <div className="container px-4 mx-auto flex flex-col w-full lg:w-1/2 gap-4">
+        <form onSubmit={(e) => handleSubmitForm(e)}>
+          <fieldset className="flex justify-between mt-4">
+            <legend className="sr-only">Dodawanie nowego zadania</legend>
             <input
               type="text"
               onChange={(e) => setPhrase(e.target.value)}
@@ -52,7 +53,6 @@ function App() {
             {phrase && (
               <button
                 type="reset"
-                value=""
                 className="px-3 bg-blue-500 hover:bg-blue-600 active:bg-blue-600 text-white cursor-pointer border-white border-l-2 transition-colors"
                 onClick={() => setPhrase("")}
               >
@@ -62,11 +62,17 @@ function App() {
             )}
             <input
               type="submit"
-              className="bg-blue-500 hover:bg-blue-600 active:bg-blue-600 text-white cursor-pointer px-4 py-2 border-white border-l-2 transition-colors"
+              className="bg-blue-500 hover:bg-blue-600 active:bg-blue-600 disabled:bg-blue-400 text-white cursor-pointer disabled:cursor-not-allowed px-4 py-2 border-white border-l-2 transition-colors"
               value="Dodaj zadanie"
+              disabled={Boolean(!phrase)}
             />
-          </div>
+          </fieldset>
         </form>
+        {tasks && tasks.length === 0 && (
+          <p className="text-center text-zinc-500">
+            Brak zadań do wyświetlenia
+          </p>
+        )}
         {tasks && filteredByPhrase && (
           <Lists filteredByPhrase={filteredByPhrase} />
         )}
