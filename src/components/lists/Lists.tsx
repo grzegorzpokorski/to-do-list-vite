@@ -1,5 +1,6 @@
 import React from "react";
 import { TaskType } from "../../App";
+import { List } from "../list/List";
 
 type ListsProps = {
   tasks: TaskType[];
@@ -14,7 +15,6 @@ export const Lists = ({ tasks, setTasks, filteredByPhrase }: ListsProps) => {
   const toDo = filteredByPhrase.filter((task) => task.done === false);
 
   const handleChangeTaskStatus = (task: TaskType) => {
-    console.log(tasks);
     const updatedTask = {
       ...task,
       done: !task.done,
@@ -32,43 +32,21 @@ export const Lists = ({ tasks, setTasks, filteredByPhrase }: ListsProps) => {
   };
 
   return (
-    <>
+    <div className="flex flex-col gap-4 mt-4">
       {toDo && toDo.length > 0 && (
-        <>
-          <h3>do zrobienia:</h3>
-          <ul>
-            {toDo.map((task) => (
-              <li key={task.createdAt}>
-                {task.content}
-                <input
-                  type="checkbox"
-                  checked={task.done}
-                  onChange={() => handleChangeTaskStatus(task)}
-                />
-                <button onClick={() => handleDeleteTask(task)}>delete</button>
-              </li>
-            ))}
-          </ul>
-        </>
+        <List
+          tasks={toDo}
+          handleDeleteTask={handleDeleteTask}
+          handleChangeTaskStatus={handleChangeTaskStatus}
+        />
       )}
       {done && done.length > 0 && (
-        <>
-          <h3>zrobione:</h3>
-          <ul>
-            {done.map((task) => (
-              <li key={task.createdAt}>
-                {task.content}
-                <input
-                  type="checkbox"
-                  checked={task.done}
-                  onChange={() => handleChangeTaskStatus(task)}
-                />
-                <button onClick={() => handleDeleteTask(task)}>delete</button>
-              </li>
-            ))}
-          </ul>
-        </>
+        <List
+          tasks={done}
+          handleDeleteTask={handleDeleteTask}
+          handleChangeTaskStatus={handleChangeTaskStatus}
+        />
       )}
-    </>
+    </div>
   );
 };
