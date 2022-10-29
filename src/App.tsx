@@ -17,7 +17,7 @@ function App() {
   const handleSubmitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (phrase === "") return;
+    if (phrase.trim() === "") return;
 
     const newTask = {
       content: phrase.trim(),
