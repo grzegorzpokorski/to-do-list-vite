@@ -2,19 +2,32 @@ import React from "react";
 import cn from "classnames";
 import { TaskType } from "../../App";
 import { FaTrashAlt } from "react-icons/fa";
+import { useTasksContext } from "../../context/TasksContext";
 
 type TaskProps = {
   task: TaskType;
-  handleDeleteTask: (task: TaskType) => void;
-  handleChangeTaskStatus: (task: TaskType) => void;
 };
 
-export const Task = ({
-  task,
-  handleDeleteTask,
-  handleChangeTaskStatus,
-}: TaskProps) => {
-  console.log("render task");
+export const Task = ({ task }: TaskProps) => {
+  const { tasks, setTasks } = useTasksContext();
+
+  const handleChangeTaskStatus = (task: TaskType) => {
+    const updatedTask = {
+      ...task,
+      done: !task.done,
+    };
+
+    const withoutUpdatedTask = tasks.filter(
+      (v) => v.createdAt !== task.createdAt,
+    );
+
+    setTasks([updatedTask, ...withoutUpdatedTask]);
+  };
+
+  const handleDeleteTask = (task: TaskType) => {
+    setTasks(tasks.filter((v) => v.createdAt !== task.createdAt));
+  };
+
   return (
     <li
       key={task.createdAt}
