@@ -1,8 +1,8 @@
 import React, { FormEvent, useState } from "react";
-import { Lists } from "./components/lists/Lists";
 import { useLocalStorage } from "./hooks/useLocalStorage";
-import { MdClear } from "react-icons/md";
 import { TasksContext } from "./context/TasksContext";
+import { Lists } from "./components/lists/Lists";
+import { MdClear } from "react-icons/md";
 
 export type TaskType = {
   content: string;

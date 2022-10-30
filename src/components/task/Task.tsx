@@ -14,6 +14,7 @@ export const Task = ({
   handleDeleteTask,
   handleChangeTaskStatus,
 }: TaskProps) => {
+  console.log("render task");
   return (
     <li
       key={task.createdAt}

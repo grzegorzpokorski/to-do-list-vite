@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { TaskType } from "../../App";
 import { useTasksContext } from "../../context/TasksContext";
 import { List } from "../list/List";
@@ -13,22 +13,28 @@ export const Lists = ({ filteredByPhrase }: ListsProps) => {
   const done = filteredByPhrase.filter((task) => task.done === true);
   const toDo = filteredByPhrase.filter((task) => task.done === false);
 
-  const handleChangeTaskStatus = (task: TaskType) => {
-    const updatedTask = {
-      ...task,
-      done: !task.done,
-    };
+  const handleChangeTaskStatus = useCallback(
+    (task: TaskType) => {
+      const updatedTask = {
+        ...task,
+        done: !task.done,
+      };
 
-    const withoutUpdatedTask = tasks.filter(
-      (v) => v.createdAt !== task.createdAt,
-    );
+      const withoutUpdatedTask = tasks.filter(
+        (v) => v.createdAt !== task.createdAt,
+      );
 
-    setTasks([updatedTask, ...withoutUpdatedTask]);
-  };
+      setTasks([updatedTask, ...withoutUpdatedTask]);
+    },
+    [tasks, setTasks],
+  );
 
-  const handleDeleteTask = (task: TaskType) => {
-    setTasks(tasks.filter((v) => v.createdAt !== task.createdAt));
-  };
+  const handleDeleteTask = useCallback(
+    (task: TaskType) => {
+      setTasks(tasks.filter((v) => v.createdAt !== task.createdAt));
+    },
+    [tasks, setTasks],
+  );
 
   return (
     <div className="flex flex-col gap-4">
