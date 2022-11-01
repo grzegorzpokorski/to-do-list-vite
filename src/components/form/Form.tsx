@@ -59,7 +59,7 @@ export const Form = ({ setPhrase, phrase }: FormProps) => {
         type="submit"
         className="bg-blue-500 hover:bg-blue-600 active:bg-blue-600 disabled:bg-blue-400 text-white cursor-pointer disabled:cursor-not-allowed px-4 py-2 border-white border-l-2 transition-colors"
         value="Dodaj zadanie"
-        disabled={Boolean(!phrase)}
+        disabled={!phrase}
       />
     </form>
   );
