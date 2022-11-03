@@ -8,7 +8,7 @@ type FormProps = {
 };
 
 export const Form = ({ setPhrase, phrase }: FormProps) => {
-  const { tasks, setTasks } = useTasksContext();
+  const { setTasks } = useTasksContext();
 
   const handleSubmitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,23 +18,15 @@ export const Form = ({ setPhrase, phrase }: FormProps) => {
     const newTask = {
       content: phrase.trim(),
       done: false,
-      createdAt: new Date().getTime(),
+      createdAt: Date.now(),
     };
 
-    if (tasks) {
-      setTasks([newTask, ...tasks]);
-    } else {
-      setTasks([newTask]);
-    }
-
+    setTasks((prev) => [...prev, newTask]);
     setPhrase("");
   };
 
   return (
-    <form
-      onSubmit={(e) => handleSubmitForm(e)}
-      className="flex justify-between mt-4"
-    >
+    <form onSubmit={handleSubmitForm} className="flex justify-between mt-4">
       <label htmlFor="form-phrase-input" className="sr-only">
         treść nowego zadania
       </label>

@@ -3,7 +3,7 @@ import { TaskType } from "../App";
 
 type TasksContextType = {
   tasks: TaskType[];
-  setTasks: (task: TaskType[]) => void;
+  setTasks: (value: React.SetStateAction<TaskType[]> | TaskType[]) => void;
 };
 
 export const TasksContext = createContext<TasksContextType | null>(null);

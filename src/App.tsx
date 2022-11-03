@@ -23,7 +23,7 @@ function App() {
     <TasksContext.Provider value={{ tasks, setTasks }}>
       <div className="container px-4 mx-auto flex flex-col w-full lg:w-1/2 gap-4">
         <Form setPhrase={setPhrase} phrase={phrase} />
-        {tasks.length === 0 ? (
+        {tasks && tasks.length === 0 ? (
           <Message content="Brak zadań do wyświetlenia" />
         ) : (
           <Lists filteredByPhrase={filteredByPhrase} />
