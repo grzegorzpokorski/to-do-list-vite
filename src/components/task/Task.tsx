@@ -30,7 +30,6 @@ export const Task = ({ task }: TaskProps) => {
 
   return (
     <li
-      key={task.createdAt}
       className={cn(
         "flex flex-row justify-between gap-4 items-center border-b-2 last:border-none border-white py-2",
         { "line-through": task.done },
