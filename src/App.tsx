@@ -15,7 +15,7 @@ function App() {
   const [tasks, setTasks] = useLocalStorage<TaskType[]>("app:tasks", []);
   const [phrase, setPhrase] = useState<string>("");
 
-  const filteredByPhrase = tasks?.filter((task) =>
+  const filteredByPhrase = tasks.filter((task) =>
     task.content.toLocaleLowerCase().includes(phrase.toLocaleLowerCase()),
   );
 
@@ -23,10 +23,9 @@ function App() {
     <TasksContext.Provider value={{ tasks, setTasks }}>
       <div className="container px-4 mx-auto flex flex-col w-full lg:w-1/2 gap-4">
         <Form setPhrase={setPhrase} phrase={phrase} />
-        {tasks && tasks.length === 0 && (
+        {tasks.length === 0 ? (
           <Message content="Brak zadań do wyświetlenia" />
-        )}
-        {tasks && tasks.length > 0 && (
+        ) : (
           <Lists filteredByPhrase={filteredByPhrase} />
         )}
       </div>
