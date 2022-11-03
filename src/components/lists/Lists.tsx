@@ -12,8 +12,8 @@ export const Lists = ({ filteredByPhrase }: ListsProps) => {
 
   return (
     <div className="flex flex-col gap-4">
-      {toDo && toDo.length > 0 && <List tasks={toDo} />}
-      {done && done.length > 0 && <List tasks={done} />}
+      {toDo.length > 0 && <List tasks={toDo} />}
+      {done.length > 0 && <List tasks={done} />}
     </div>
   );
 };
