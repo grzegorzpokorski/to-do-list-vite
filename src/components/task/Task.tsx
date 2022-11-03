@@ -12,16 +12,11 @@ export const Task = ({ task }: TaskProps) => {
   const { tasks, setTasks } = useTasksContext();
 
   const handleChangeTaskStatus = (task: TaskType) => {
-    const updatedTask = {
-      ...task,
-      done: !task.done,
-    };
-
-    const withoutUpdatedTask = tasks.filter(
-      (v) => v.createdAt !== task.createdAt,
+    setTasks((prev) =>
+      prev.map((t) =>
+        t.createdAt === task.createdAt ? { ...t, done: !t.done } : t,
+      ),
     );
-
-    setTasks([updatedTask, ...withoutUpdatedTask]);
   };
 
   const handleDeleteTask = (task: TaskType) => {
