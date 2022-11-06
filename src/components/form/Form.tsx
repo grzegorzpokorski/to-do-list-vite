@@ -10,18 +10,21 @@ type FormProps = {
 export const Form = ({ setPhrase, phrase }: FormProps) => {
   const { setTasks } = useTasksContext();
 
-  const handleSubmitForm = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (phrase.trim() === "") return;
-
-    const newTask = {
-      content: phrase.trim(),
+  const createTask = (content: string) => {
+    return {
+      content,
       done: false,
       createdAt: Date.now(),
     };
+  };
 
-    setTasks((prev) => [...prev, newTask]);
+  const handleSubmitForm = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const content = phrase.trim();
+
+    if (!content) return;
+
+    setTasks((prev) => [...prev, createTask(content)]);
     setPhrase("");
   };
 

@@ -1,6 +1,5 @@
 import React from "react";
-import { TaskType } from "../../App";
-import { Task } from "../task/Task";
+import { Task, TaskType } from "../task/Task";
 
 type ListProps = {
   tasks: TaskType[];
